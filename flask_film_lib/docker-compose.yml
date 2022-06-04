@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+
+    db:
+        image: postgres:12.4
+        restart: always
+        env_file:
+            - .env.dev
+        ports:
+            - "5432:5432"
+        volumes:
+            - database-data:/var/lib/postgresql/data
+
+    flask:
+        image: flask
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "5000:5000"
+        env_file:
+            - .env.dev
+        volumes:
+            - .:/wsgi
+        depends_on:
+            -   db
+
+    nginx:
+        image: nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ./conf.d:/etc/nginx/conf.d
+        env_file:
+            - .env.dev
+        depends_on:
+            - flask
+
+
+volumes:
+    database-data:
