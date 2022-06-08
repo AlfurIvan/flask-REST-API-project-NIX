@@ -1,7 +1,7 @@
-from . import db, BaseModelMixin
+from . import db
 
 
-class Films(db.Model, BaseModelMixin):
+class Films(db.Model):
     """Class, stored films and their attrs"""
     __tablename__ = 'films'
 

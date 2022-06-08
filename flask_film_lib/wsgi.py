@@ -2,12 +2,14 @@
 
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 from config import Config
-from models import db
+from app.models.db import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
-migrate_ = Migrate(app, db)
+migrate = Migrate(app, db)
+CORS(app)
 db.init_app(app)
 
 
