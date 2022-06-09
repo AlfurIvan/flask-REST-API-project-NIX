@@ -1,7 +1,7 @@
 """abstract base CRUD repo"""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Union, Type, TypeVar, Optional, Any
+from typing import Generic, List, Dict, Union, Type, TypeVar, Optional, Any
 from pydantic import BaseModel
 from app.models.db import db
 from . import DEFAULT_PAGINATION_VALUE
@@ -13,7 +13,7 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 ListSchemaType = TypeVar("ListSchemaType", bound=BaseModel)
 
 
-class AbcCRUD(ABC):
+class AbcCRUD(Generic[ModelType, CreateSchemaType, UpdateSchemaType], ABC):
     """Create Read Update Delete abstracts + read_multi"""
 
     def __init__(self, model: Type[ModelType], schema: Type[BaseSchemaType],list_schema:Type[ListSchemaType]):
