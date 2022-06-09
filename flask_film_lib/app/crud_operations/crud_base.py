@@ -1,14 +1,14 @@
 """base crud operations under crud abs"""
 
 from json import loads
-from typing import Generic, List, Dict, Union, Optional, Any
+from typing import List, Dict, Union, Optional, Any
 from app.models.db import db
 from .crud_abs import AbcCRUD, ModelType, CreateSchemaType, \
     UpdateSchemaType, BaseSchemaType
 from . import DEFAULT_PAGINATION_VALUE
 
 
-class BaseCRUD(Generic[ModelType, CreateSchemaType, UpdateSchemaType], AbcCRUD):
+class BaseCRUD(AbcCRUD):
     """
     Class with default realization of CRUD
     :param .model: flask-sqlalchemy model class
