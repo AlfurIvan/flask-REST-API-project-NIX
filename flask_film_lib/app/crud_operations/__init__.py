@@ -1,5 +1,9 @@
 """CRUD module __init__"""
 
-from app.models.models import Films, Directors, Users, Roles, Genres
+from .crud_director import director
+from .crud_director import director
+from .crud_director import director
+from .crud_director import director
+from .crud_director import director
 
-DEFAULT_PAGINATION_VALUE = 10
+

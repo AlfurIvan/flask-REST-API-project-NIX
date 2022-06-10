@@ -5,6 +5,8 @@ from os import getenv
 POSTGRES_USER = getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
 
+DEFAULT_PAGINATION_VALUE = 10
+
 
 class Config:
     """config class"""
