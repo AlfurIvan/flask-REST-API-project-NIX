@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Generic, List, Dict, Union, Type, TypeVar, Optional, Any
 from pydantic import BaseModel
 from app.models.db import db
-from config import DEFAULT_PAGINATION_VALUE
+from app.config import DEFAULT_PAGINATION_VALUE
 
 ModelType = TypeVar("ModelType", bound=db.Model)
 BaseSchemaType = TypeVar("BaseSchemaType", bound=BaseModel)

@@ -1,20 +1,19 @@
-""""""
+"""module for user pydentic schema"""
 
 import re
 from typing import List
-from pydantic import BaseModel,EmailStr, constr, validator
+from pydantic import BaseModel, constr, validator
 
 
 class UserBase(BaseModel):
-    """"""
-    name: constr(max_length=40)
-    email: EmailStr
+    """User pydantic schema"""
+    login: constr(max_length=40)
 
-    @validator("name")
+    @validator("login")
     def validate_name(cls, val):
-        """validation name"""
+        """validation login"""
         if re.match(r'^[A-Z][a-z]*$', val) is None:
-            raise ValueError('Bad name')
+            raise ValueError('Bad login')
         return val
 
     class Config:
@@ -33,10 +32,14 @@ class UserList(BaseModel):
 
 class UserCreate(UserBase):
     """create schema"""
+    role_id: int
+    password: constr(max_length=255)
 
 
 class UserUpdate(UserBase):
     """update schema"""
+    role_id: int
+    password: constr(max_length=255)
 
 
 class INdbUserBase(UserBase):

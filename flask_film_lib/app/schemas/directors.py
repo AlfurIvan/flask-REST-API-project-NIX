@@ -1,4 +1,3 @@
-
 """directors --> directorSchema
 pydantic schema for Director"""
 
