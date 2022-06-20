@@ -5,7 +5,7 @@ from typing import List, Dict, Union, Optional, Any
 from app.models.db import db
 from .crud_abs import AbcCRUD, ModelType, CreateSchemaType, \
     UpdateSchemaType, BaseSchemaType
-from config import DEFAULT_PAGINATION_VALUE
+from app.config import DEFAULT_PAGINATION_VALUE
 
 
 class BaseCRUD(AbcCRUD):

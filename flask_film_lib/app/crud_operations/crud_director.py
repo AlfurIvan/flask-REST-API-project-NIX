@@ -8,6 +8,7 @@ from app.schemas.directors import DirectorCreate, DirectorBase, DirectorUpdate, 
 
 class DirectorCRUD(BaseCRUD[Directors, DirectorCreate, DirectorUpdate]):
     """Directors CRUDs over BaseCRUD for Director`s model"""
+
     def delete(self, db_session: db.session, *, del_id: int) -> DirectorBase:
         """delete method"""
         obj = db_session.query(self.model).get(del_id)

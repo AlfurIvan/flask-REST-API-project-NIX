@@ -1,14 +1,13 @@
 """CRUD for film table under film_abs"""
 
-from json import loads
-from typing import List, Dict, Any, Union, Optional
-
+from typing import List, Dict, Any, Optional
+from fastapi.encoders import jsonable_encoder
 from app.models.models import Films, Genres, Directors
 from app.models.db import db
 from app.schemas.films import FilmBase, FilmList, FilmCreate, FilmUpdate
 from .crud_base import BaseCRUD
 from .crud_film_abs import FilmAbs
-from config import DEFAULT_PAGINATION_VALUE as D
+from app.config import DEFAULT_PAGINATION_VALUE as D
 from sqlalchemy import extract
 
 
@@ -16,10 +15,10 @@ class FilmCRUD(BaseCRUD[Films, FilmCreate, FilmUpdate], FilmAbs):
     """Film CRUDs over BaseCRUD and FilmAbs for Film`s model"""
 
     def create(self, db_session: db.session,
-               new_obj: Union[FilmCreate, Dict[str, Any]], **kwargs) -> FilmBase:
+               new_obj: Dict[str, Any], **kwargs) -> FilmBase:
         """create method"""
         genres = kwargs['genres']
-        obj = loads(new_obj)
+        obj = jsonable_encoder(new_obj)
         db_obj = self.model(**obj)
         for g in genres:
             db_obj.genres.append(g)
@@ -29,13 +28,13 @@ class FilmCRUD(BaseCRUD[Films, FilmCreate, FilmUpdate], FilmAbs):
         return self.schema.from_orm(db_obj)
 
     def mul_query(self, db_session: db.session):
-        """method to creatind multiple queries"""
+        """method to creating multiple queries"""
         return db_session.query(self.model)
 
     @staticmethod
     def query_paginator(query, page: int = 1, on_page: int = D):
         """method to paginate multiple queries"""
-        return query.paginate(page=page, on_page=on_page).itens()
+        return query.paginate(page=page, on_page=on_page).items()
 
     def get_multi(self, db_session: db.session, *, page: int = 1, on_page: int = D) -> List[FilmBase]:
         """Read all records(first 10)"""
@@ -118,5 +117,6 @@ class FilmCRUD(BaseCRUD[Films, FilmCreate, FilmUpdate], FilmAbs):
 
         return self.list_schema.from_orm([self.schema.from_orm(item)
                                           for item in self.query_paginator(query, page=page, on_page=on_page)])
+
 
 film = FilmCRUD(Films, FilmBase, FilmList)
